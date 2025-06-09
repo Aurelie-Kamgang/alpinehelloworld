@@ -52,11 +52,13 @@ pipeline{
         }
         stage('release') {
             agent any
-            script {
-                sh '''
-                    docker login -u ${DOCKERHUB_AUTH_USR} -p ${DOCKERHUB_AUTH_PSW}
-                    docker push ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG}
-                '''
+            steps {
+                script {
+                    sh '''
+                        docker login -u ${DOCKERHUB_AUTH_USR} -p ${DOCKERHUB_AUTH_PSW}
+                        docker push ${ID_DOCKERHUB}/${IMAGE_NAME}:${IMAGE_TAG}
+                    '''
+                }                
             }
         }
         stage('deploy PROD'){
