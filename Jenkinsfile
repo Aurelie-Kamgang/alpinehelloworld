@@ -8,7 +8,7 @@ pipeline{
         ID_DOCKERHUB = "${DOCKERHUB_AUTH_USR}"
     }
     stages {
-        stage('Build') {
+        stage('Build image') {
             agent any
             steps {
                 script {
