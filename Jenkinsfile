@@ -7,7 +7,7 @@ pipeline{
         DOCKERHUB_AUTH = credentials('DOCKERHUB_AUTH')
         ID_DOCKERHUB = "${DOCKERHUB_AUTH_USR}"
     }
-    stage{
+    stages {
         stage('Build') {
             agent any
             steps {
