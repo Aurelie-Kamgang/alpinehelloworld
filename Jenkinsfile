@@ -8,7 +8,7 @@ pipeline{
         ID_DOCKERHUB = "${DOCKERHUB_AUTH_USR}"
     }
     stages {
-        stage('Build image') {
+        stage('Build') {
             agent any
             steps {
                 script {
@@ -61,7 +61,7 @@ pipeline{
                 }                
             }
         }
-        stage('deploy STAGING'){
+        stage('deploy staging'){
             agent any
             environment {
                 HOSTNAME_DEPLOY_STAGING = "54.211.76.148"
