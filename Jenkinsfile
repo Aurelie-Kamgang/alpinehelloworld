@@ -6,6 +6,8 @@ pipeline{
         PORT_EXPOSED = "80"
         DOCKERHUB_AUTH = credentials('DOCKERHUB_AUTH')
         ID_DOCKERHUB = "${DOCKERHUB_AUTH_USR}"
+        PROD_APP_ENDPOINT = "44.211.212.77"
+        STG_APP_ENDPOINT = "35.173.178.26"
     }
     stages {
         stage('Build') {
@@ -113,7 +115,7 @@ pipeline{
   }
     post {
         success {
-            slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+            slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}) - PROD URL => http://${PROD_APP_ENDPOINT} , STAGING URL => http://${STG_APP_ENDPOINT}")
         }
         failure {
             slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
