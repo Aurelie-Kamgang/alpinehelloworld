@@ -60,7 +60,7 @@ pipeline{
                     }
                 }
 
-            #}
+            }
             stage ('deploy prod') {
                 agent any
                 steps {
