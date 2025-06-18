@@ -1,5 +1,5 @@
 pipeline{
-    agent none {
+    agent none
         environment {
             IMAGE_NAME = "alpinehello"
             IMAGE_TAG = "v1.0"
@@ -83,5 +83,4 @@ pipeline{
             }
         }
     }
-}
 }
