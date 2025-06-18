@@ -3,7 +3,7 @@ pipeline{
         environment {
             IMAGE_NAME = "alpinehello"
             IMAGE_TAG = "v1.0"
-            PORT_EXPOSE = "v1"
+            PORT_EXPOSE = "80"
             DOCKERHUB_AUTH = credentials('DOCKERHUB_AUTH')
             ID_DOCKERHUB = "${DOCKERHUB_AUTH_USR}" 
             HOSTNAME_DEPLOY_STAGING = "35.170.246.199"
