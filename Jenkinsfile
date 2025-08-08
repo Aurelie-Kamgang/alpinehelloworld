@@ -4,7 +4,7 @@ pipeline{
             IMAGE_NAME = "alpinehello"
             IMAGE_TAG = "v1.0"
             PORT_EXPOSE = "80"
-            ID_DOCKERHUB = blondel
+            ID_DOCKERHUB = 'blondel'
             HOSTNAME_DEPLOY_STAGING = "35.170.246.199"
             HOSTNAME_DEPLOY_PROD = "18.233.5.135"         
         }
