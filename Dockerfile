@@ -4,7 +4,7 @@ FROM python:3.12-alpine
 
 # Install python and pip
 #RUN apk add --no-cache --update python3 py3-pip bash
-RUN apk add --no-cache bash
+#RUN apk add --no-cache bash
 ADD ./webapp/requirements.txt /tmp/requirements.txt
 
 # Install dependencies
