@@ -5,7 +5,7 @@ pipeline {
         ID_DOCKER = "${DOCKERHUB_AUTH_USR}"
         PORT_EXPOSED = "80"
         IMAGE_NAME = "alpinebootcamp26"
-        IMAGE_TAG = "v1.2"
+        IMAGE_TAG = "v1.3"
     }
     stages {
       stage ('Build image'){
