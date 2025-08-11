@@ -5,7 +5,7 @@ pipeline {
         ID_DOCKER = "${DOCKERHUB_AUTH_USR}"
         PORT_EXPOSED = "80"
         IMAGE_NAME = "alpinebootcamp26"
-        IMAGE_TAG = "v1.1"
+        IMAGE_TAG = "v1.2"
     }
     stages {
       stage ('Build image'){
@@ -55,7 +55,7 @@ pipeline {
       stage('Deploy in staging'){
           agent any
             environment {
-                HOSTNAME_DEPLOY_STAGING = "54.227.172.12"
+                HOSTNAME_DEPLOY_STAGING = "54.163.117.228"
             }
           steps {
             sshagent(credentials: ['SSH_AUTH_SERVER']) {
@@ -79,7 +79,7 @@ pipeline {
       stage('Deploy in prod'){
           agent any
             environment {
-                HOSTNAME_DEPLOY_PROD = "54.175.31.22"
+                HOSTNAME_DEPLOY_PROD = "44.203.110.142"
             }
           steps {
             sshagent(credentials: ['SSH_AUTH_SERVER']) {
