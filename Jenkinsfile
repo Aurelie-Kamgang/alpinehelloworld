@@ -1,4 +1,3 @@
-@Library('shared-library') _
 pipeline {
     agent none
     environment {
@@ -56,7 +55,7 @@ pipeline {
       stage('Deploy in staging'){
           agent any
             environment {
-                HOSTNAME_DEPLOY_STAGING = "54.163.117.228"
+                HOSTNAME_DEPLOY_STAGING = "54.208.247.252"
             }
           steps {
             sshagent(credentials: ['SSH_AUTH_SERVER']) {
@@ -80,7 +79,7 @@ pipeline {
       stage('Deploy in prod'){
           agent any
             environment {
-                HOSTNAME_DEPLOY_PROD = "44.203.110.142"
+                HOSTNAME_DEPLOY_PROD = "44.204.238.148"
             }
           steps {
             sshagent(credentials: ['SSH_AUTH_SERVER']) {
@@ -102,11 +101,4 @@ pipeline {
           }
       }
     }
-      post {
-        always {
-            script {
-                slackNotifier currentBuild.result 
-            }
-        }
-      }
 }
