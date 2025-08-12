@@ -58,20 +58,15 @@ pipeline {
                 HOSTNAME_DEPLOY_STAGING = "54.208.247.252"
             }
           steps {
-            sshagent(credentials: ['SSH_AUTH_SERVER']) {
+            sshagent(['SSH_AUTH_SERVER']) {
                 sh '''
-                    [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
-                    ssh-keyscan -t rsa,dsa ${HOSTNAME_DEPLOY_STAGING} >> ~/.ssh/known_hosts
-                    command1="docker login -u $DOCKERHUB_AUTH_USR -p $DOCKERHUB_AUTH_PSW"
-                    command2="docker pull $DOCKERHUB_AUTH_USR/$IMAGE_NAME:$IMAGE_TAG"
-                    command3="docker rm -f alpinebootcampp || echo 'app does not exist'"
-                    command4="docker run -d -p 80:5000 -e PORT=5000 --name alpinebootcampp $DOCKERHUB_AUTH_USR/$IMAGE_NAME:$IMAGE_TAG"
-                    ssh ubuntu@${HOSTNAME_DEPLOY_STAGING} \
-                        -o SendEnv=IMAGE_NAME \
-                        -o SendEnv=IMAGE_TAG \
-                        -o SendEnv=DOCKERHUB_AUTH_USR \
-                        -o SendEnv=DOCKERHUB_AUTH_PSW \
-                        -C "$command1 && $command2 && $command3 && $command4"
+                    echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+                    ssh -o StrictHostKeyChecking=no -l $SERVER_USERNAME $SERVER_IP "docker rm -f $IMAGE_NAME || echo 'All deleted'"
+                    ssh -o StrictHostKeyChecking=no -l $SERVER_USERNAME $SERVER_IP "docker pull $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG || echo 'Image Download successfully'"
+                    sleep 30
+                    ssh -o StrictHostKeyChecking=no -l $SERVER_USERNAME $SERVER_IP "docker run --rm -dp $HOST_PORT:$CONTAINER_PORT --name $IMAGE_NAME $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG"
+                    sleep 5
+                    curl -I http://$SERVER_IP:$HOST_PORT
                 '''
             }
           }
