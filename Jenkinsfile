@@ -54,6 +54,25 @@ pipeline {
           }
       }
 
+      stage('Deploy in staging'){
+          agent any
+            environment {
+                SERVER_IP = "54.208.247.252"
+            }
+          steps {
+            sshagent(['SSH_AUTH_SERVER']) {
+                sh '''
+                    ssh -o StrictHostKeyChecking=no -l ubuntu $SERVER_IP "docker rm -f $IMAGE_NAME || echo 'All deleted'"
+                    ssh -o StrictHostKeyChecking=no -l ubuntu $SERVER_IP "docker pull $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG || echo 'Image Download successfully'"
+                    sleep 30
+                    ssh -o StrictHostKeyChecking=no -l ubuntu $SERVER_IP "docker run --rm -dp $PORT_EXPOSED:5000 -e PORT=5000 --name $IMAGE_NAME $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG"
+                    sleep 5
+                    curl -I http://$SERVER_IP:$PORT_EXPOSED
+                '''
+            }
+          }
+      }
+        
       stage('Deploy in prod'){
           agent any
             environment {
