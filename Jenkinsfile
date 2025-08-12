@@ -6,6 +6,7 @@ pipeline {
         PORT_EXPOSED = "80"
         IMAGE_NAME = "alpinebootcamp26"
         IMAGE_TAG = "v1.3"
+        DOCKER_USERNAME = 'blondel'
     }
     stages {
       stage ('Build image'){
@@ -60,7 +61,6 @@ pipeline {
           steps {
             sshagent(['SSH_AUTH_SERVER']) {
                 sh '''
-                    echo $DOCKER_PASSWORD | docker login -u $ID_DOCKER --password-stdin
                     ssh -o StrictHostKeyChecking=no -l ubuntu $SERVER_IP "docker rm -f $IMAGE_NAME || echo 'All deleted'"
                     ssh -o StrictHostKeyChecking=no -l ubuntu $SERVER_IP "docker pull $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG || echo 'Image Download successfully'"
                     sleep 30
