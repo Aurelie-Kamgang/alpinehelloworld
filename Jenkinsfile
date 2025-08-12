@@ -57,7 +57,7 @@ pipeline {
       stage('Deploy in staging'){
           agent any
             environment {
-                SERVER_IP = "54.208.247.252"
+                SERVER_IP = "3.88.230.200"
             }
           steps {
             sshagent(['SSH_AUTH_SERVER']) {
@@ -72,7 +72,28 @@ pipeline {
             }
           }
       }
-        
+      stage('Deploy in prod'){
+          agent any
+            environment {
+                HOSTNAME_DEPLOY_PROD = "3.86.199.88"
+            }
+          steps {
+            sshagent(credentials: ['SSH_AUTH_SERVER']) {
+                sh '''
+                    command1="docker login -u $DOCKERHUB_AUTH_USR -p $DOCKERHUB_AUTH_PSW"
+                    command2="docker pull $DOCKERHUB_AUTH_USR/$IMAGE_NAME:$IMAGE_TAG"
+                    command3="docker rm -f alpinebootcampp || echo 'app does not exist'"
+                    command4="docker run -d -p 80:5000 -e PORT=5000 --name alpinebootcampp $DOCKERHUB_AUTH_USR/$IMAGE_NAME:$IMAGE_TAG"
+                    ssh -o StrictHostKeyChecking=no ubuntu@${HOSTNAME_DEPLOY_PROD} \
+                        -o SendEnv=IMAGE_NAME \
+                        -o SendEnv=IMAGE_TAG \
+                        -o SendEnv=DOCKERHUB_AUTH_USR \
+                        -o SendEnv=DOCKERHUB_AUTH_PSW \
+                        -C "$command1 && $command2 && $command3 && $command4"
+                '''
+            }
+          }
+      }        
 
     }
 }
