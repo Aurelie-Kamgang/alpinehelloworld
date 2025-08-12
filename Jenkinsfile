@@ -15,7 +15,7 @@ pipeline {
           steps {
             sshagent(credentials: ['SSH_AUTH_SERVER']) {
                 sh '''
-                    [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
+                    mkdir ~/.ssh && chmod 0700 ~/.ssh
                     ssh-keyscan -t rsa,dsa ${HOSTNAME_DEPLOY_PROD} >> ~/.ssh/known_hosts
                     command2="docker pull $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG"
                     command3="docker rm -f alpinebootcampp || echo 'app does not exist'"
