@@ -15,12 +15,10 @@ pipeline {
           steps {
             sshagent(credentials: ['SSH_AUTH_SERVER']) {
                 sh '''
-                    mkdir ~/.ssh && chmod 0700 ~/.ssh
-                    ssh-keyscan -t rsa,dsa ${HOSTNAME_DEPLOY_PROD} >> ~/.ssh/known_hosts
                     command2="docker pull $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG"
                     command3="docker rm -f alpinebootcampp || echo 'app does not exist'"
                     command4="docker run -d -p 80:5000 -e PORT=5000 --name alpinebootcampp $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG"
-                    ssh -t ubuntu@${HOSTNAME_DEPLOY_PROD} \
+                    ssh -o StrictHostKeyChecking=no ubuntu@${HOSTNAME_DEPLOY_PROD} \
                         -o SendEnv=IMAGE_NAME \
                         -o SendEnv=IMAGE_TAG \
                         -o SendEnv=DOCKER_USERNAME \
