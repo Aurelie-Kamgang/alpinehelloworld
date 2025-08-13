@@ -10,7 +10,7 @@ pipeline {
       stage('Deploy in prod'){
           agent any
             environment {
-                HOSTNAME_DEPLOY_PROD = "44.205.252.252"
+                HOSTNAME_DEPLOY_PROD = "18.234.241.157"
             }
           steps {
             sshagent(credentials: ['SSH_AUTH_SERVER']) {
