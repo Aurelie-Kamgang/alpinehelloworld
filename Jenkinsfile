@@ -22,7 +22,7 @@ pipeline {
                         -o SendEnv=IMAGE_NAME \
                         -o SendEnv=IMAGE_TAG \
                         -o SendEnv=DOCKER_USERNAME \
-                        -C "$command1 && $command2 && $command3 && $command4"
+                        -C "$command2 && $command3 && $command4"
                 '''
             }
           }
