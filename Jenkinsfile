@@ -1,3 +1,4 @@
+@Library('shared-library@main')_
 pipeline {
     agent none
     environment {
@@ -5,7 +6,7 @@ pipeline {
         ID_DOCKER = "${DOCKERHUB_AUTH_USR}"
         PORT_EXPOSED = "80"
         IMAGE_NAME = "alpinebootcamp27"
-        IMAGE_TAG = "v1.2"
+        IMAGE_TAG = "v1.3"
         DOCKER_USERNAME = 'blondel'
     }
     stages {
@@ -57,7 +58,7 @@ pipeline {
       stage('Deploy in staging'){
           agent any
             environment {
-                SERVER_IP = "107.23.176.12"
+                SERVER_IP = "52.23.162.57"
             }
           steps {
             sshagent(['SSH_AUTH_SERVER']) {
@@ -75,7 +76,7 @@ pipeline {
       stage('Deploy in prod'){
           agent any
             environment {
-                HOSTNAME_DEPLOY_PROD = "98.89.44.128"
+                HOSTNAME_DEPLOY_PROD = "54.91.25.74"
             }
           steps {
             sshagent(credentials: ['SSH_AUTH_SERVER']) {
@@ -98,11 +99,11 @@ pipeline {
       }        
     }
     post {
-        success {
-            slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-        }
-        failure {
-            slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-        }   
+      always {
+               script {
+                 /* Use slackNotifier.groovy from shared library and provide current build result as parameter*/
+                 slackNotifier currentBuild.result
+               }
+     }
     }
 }
