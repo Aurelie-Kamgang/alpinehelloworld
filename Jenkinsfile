@@ -24,7 +24,7 @@ pipeline {
            sh '''
               echo "Clean Environment"
               docker rm -f $IMAGE_NAME || echo "container does not exist"
-              docker run --name $IMAGE_NAME -d -p ${PORT_EXPOSED}:80 -e PORT=80 ${ID_DOCKER}/$IMAGE_NAME:$IMAGE_TAG
+              docker run --name $IMAGE_NAME -d -p ${PORT_EXPOSED}:8080 -e PORT=8080 ${ID_DOCKER}/$IMAGE_NAME:$IMAGE_TAG
               sleep 5
               curl http://172.17.0.1:${PORT_EXPOSED} | grep -q "Hello world!"
            '''
@@ -65,7 +65,7 @@ pipeline {
                     ssh -o StrictHostKeyChecking=no -l ubuntu $SERVER_IP "docker rm -f $IMAGE_NAME || echo 'All deleted'"
                     ssh -o StrictHostKeyChecking=no -l ubuntu $SERVER_IP "docker pull $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG || echo 'Image Download successfully'"
                     sleep 30
-                    ssh -o StrictHostKeyChecking=no -l ubuntu $SERVER_IP "docker run --rm -dp $PORT_EXPOSED:80 -e PORT=80 --name $IMAGE_NAME $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG"
+                    ssh -o StrictHostKeyChecking=no -l ubuntu $SERVER_IP "docker run --rm -dp $PORT_EXPOSED:8080 -e PORT=8080 --name $IMAGE_NAME $DOCKER_USERNAME/$IMAGE_NAME:$IMAGE_TAG"
                     sleep 5
                     curl -I http://$SERVER_IP:$PORT_EXPOSED
                 '''
@@ -85,7 +85,7 @@ pipeline {
                     command1="docker login -u $DOCKERHUB_AUTH_USR -p $DOCKERHUB_AUTH_PSW"
                     command2="docker pull $DOCKERHUB_AUTH_USR/$IMAGE_NAME:$IMAGE_TAG"
                     command3="docker rm -f alpinebootcamp28 || echo 'app does not exist'"
-                    command4="docker run -d -p 80:80 -e PORT=80 --name alpinebootcamp28 $DOCKERHUB_AUTH_USR/$IMAGE_NAME:$IMAGE_TAG"
+                    command4="docker run -d -p 80:8080 -e PORT=8080 --name alpinebootcamp28 $DOCKERHUB_AUTH_USR/$IMAGE_NAME:$IMAGE_TAG"
                     ssh -o StrictHostKeyChecking=no ubuntu@${HOSTNAME_DEPLOY_PROD} \
                         -o SendEnv=IMAGE_NAME \
                         -o SendEnv=IMAGE_TAG \
