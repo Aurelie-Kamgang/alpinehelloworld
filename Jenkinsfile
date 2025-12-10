@@ -57,7 +57,7 @@ pipeline {
       stage('Deploy in staging'){
           agent any
             environment {
-                SERVER_IP = "54.144.64.227"
+                SERVER_IP = "54.91.153.34"
             }
           steps {
             sshagent(['SSH_AUTH_SERVER']) {
@@ -75,7 +75,7 @@ pipeline {
       stage('Deploy in prod'){
           agent any
             environment {
-                HOSTNAME_DEPLOY_PROD = "23.20.73.201"
+                HOSTNAME_DEPLOY_PROD = "34.229.148.43"
             }
           steps {
             sshagent(credentials: ['SSH_AUTH_SERVER']) {
@@ -96,5 +96,13 @@ pipeline {
             }
           }
       }        
+    }
+    post {
+        success {
+            slackSend(color: "#00FF00", message: "SUCCESSFUL: Job '' ${env.JOB_NAME}'' Build # ''${env.BUILD_NUMBER}'' (<${env.BUILD_URL}|Open>)")
+        }
+        failure {
+            slackSend(color: "#FF0000", message: "FAILED: Job '' ${env.JOB_NAME}'' Build # ''${env.BUILD_NUMBER}'' (<${env.BUILD_URL}|Open>)")
+        }
     }
 }
