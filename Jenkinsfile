@@ -1,3 +1,5 @@
+/* import shared library */
+@Library('shared-library')_
 pipeline {
     agent none
     environment {
@@ -98,11 +100,10 @@ pipeline {
       }        
     }
     post {
-        success {
-            slackSend(color: "#00FF00", message: "SUCCESSFUL: Job '' ${env.JOB_NAME}'' Build # ''${env.BUILD_NUMBER}'' (<${env.BUILD_URL}|Open>)")
-        }
-        failure {
-            slackSend(color: "#FF0000", message: "FAILED: Job '' ${env.JOB_NAME}'' Build # ''${env.BUILD_NUMBER}'' (<${env.BUILD_URL}|Open>)")
+        always {
+            script {
+                slackNotifier currentBuild.result
+            }
         }
     }
 }
