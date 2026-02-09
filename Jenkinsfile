@@ -8,8 +8,8 @@ pipeline {
         PRODUCTION = "${PARAM_APP_NAME}-prod"
         DOCKERHUB_ID = "blondel"
         DOCKERHUB_PASSWORD = credentials('dockerhub')
-        STG_API_ENDPOINT = "${PARAM_STG_API_ENDPOINT}"        /* Mettre le couple IP:PORT de votre API eazylabs, exemple 100.25.147.76:1993 */
-        STG_APP_ENDPOINT = "${PARAM_STG_APP_ENDPOINT}"        /* Mettre le couple IP:PORT votre application en staging, exemple 100.25.147.76:8000 */
+        STG_API_ENDPOINT = "ip10-0-2-7-d64rd027hla0m569ospg-1993.direct.eazylabs.servepics.com"        /* Mettre le couple IP:PORT de votre API eazylabs, exemple 100.25.147.76:1993 */
+        STG_APP_ENDPOINT = "ip10-0-2-7-d64rd027hla0m569ospg-80.direct.eazylabs.servepics.com"        /* Mettre le couple IP:PORT votre application en staging, exemple 100.25.147.76:8000 */
         PROD_API_ENDPOINT = "ip10-0-2-6-d64rd027hla0m569ospg-1993.direct.eazylabs.servepics.com"      /* Mettre le couple IP:PORT de votre API eazylabs, 100.25.147.76:1993 */
         PROD_APP_ENDPOINT = "ip10-0-2-6-d64rd027hla0m569ospg-80.direct.eazylabs.servepics.com"      /* Mettre le couple IP:PORT votre application en production, exemple 100.25.147.76 */
         INTERNAL_PORT = "${PARAM_INTERNAL_PORT}"              /*5000 par défaut*/
