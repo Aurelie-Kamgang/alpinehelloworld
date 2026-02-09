@@ -6,7 +6,7 @@ pipeline {
         IMAGE_TAG = "${PARAM_IMAGE_TAG}"                      /*tag docker, par exemple latest*/
         STAGING = "${PARAM_APP_NAME}-staging"
         PRODUCTION = "${PARAM_APP_NAME}-prod"
-        DOCKERHUB_ID = "${PARAM_DOCKERHUB_ID}"
+        DOCKERHUB_ID = "blondel"
         DOCKERHUB_PASSWORD = credentials('dockerhub')
         STG_API_ENDPOINT = "${PARAM_STG_API_ENDPOINT}"        /* Mettre le couple IP:PORT de votre API eazylabs, exemple 100.25.147.76:1993 */
         STG_APP_ENDPOINT = "${PARAM_STG_APP_ENDPOINT}"        /* Mettre le couple IP:PORT votre application en staging, exemple 100.25.147.76:8000 */
