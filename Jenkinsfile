@@ -59,7 +59,7 @@ pipeline {
       stage('Deploy in staging'){
           agent any
             environment {
-                SERVER_IP = "54.91.153.34"
+                SERVER_IP = "3.90.16.188"
             }
           steps {
             sshagent(['SSH_AUTH_SERVER']) {
@@ -77,7 +77,7 @@ pipeline {
       stage('Deploy in prod'){
           agent any
             environment {
-                HOSTNAME_DEPLOY_PROD = "34.229.148.43"
+                HOSTNAME_DEPLOY_PROD = "54.86.59.53"
             }
           steps {
             sshagent(credentials: ['SSH_AUTH_SERVER']) {
