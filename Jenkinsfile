@@ -1,5 +1,5 @@
-/* import shared library */
-@Library('shared-library')_
+/* import shared library 
+@Library('shared-library')_*/
 pipeline {
     agent none
     environment {
@@ -99,11 +99,11 @@ pipeline {
           }
       }        
     }
-    post {
+    /*post {
         always {
             script {
                 slackNotifier currentBuild.result
             }
         }
-    }
+    }*/
 }
