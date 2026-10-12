@@ -6,7 +6,7 @@ pipeline {
         DOCKERHUB_AUTH = credentials('blondel')
         ID_DOCKER = "${DOCKERHUB_AUTH_USR}"
         PORT_EXPOSED = "80"
-        IMAGE_NAME = "alpinebootcamp28"
+        IMAGE_NAME = "alpinebootcamp33"
         IMAGE_TAG = "v1.1"
         DOCKER_USERNAME = 'blondel'
     }
@@ -59,7 +59,7 @@ pipeline {
       stage('Deploy in staging'){
           agent any
             environment {
-                SERVER_IP = "3.90.16.188"
+                SERVER_IP = "54.196.174.216"
             }
           steps {
             sshagent(['SSH_AUTH_SERVER']) {
@@ -77,7 +77,7 @@ pipeline {
       stage('Deploy in prod'){
           agent any
             environment {
-                HOSTNAME_DEPLOY_PROD = "54.86.59.53"
+                HOSTNAME_DEPLOY_PROD = "107.21.89.23"
             }
           steps {
             sshagent(credentials: ['SSH_AUTH_SERVER']) {
