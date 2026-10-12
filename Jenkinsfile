@@ -83,7 +83,7 @@ pipeline {
             sshagent(credentials: ['SSH_AUTH_SERVER']) {
                 sh '''
                     [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
-                    ssh-keyscan -t rsa,dsa ${HOSTNAME_DEPLOY_PROD} >> ~/.ssh/known_hosts
+                    ssh-keyscan -t rsa ${HOSTNAME_DEPLOY_PROD} >> ~/.ssh/known_hosts
                     command1="docker login -u $DOCKERHUB_AUTH_USR -p $DOCKERHUB_AUTH_PSW"
                     command2="docker pull $DOCKERHUB_AUTH_USR/$IMAGE_NAME:$IMAGE_TAG"
                     command3="docker rm -f alpinebootcamp28 || echo 'app does not exist'"
