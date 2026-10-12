@@ -6,7 +6,7 @@ pipeline {
         DOCKERHUB_AUTH = credentials('blondel')
         ID_DOCKER = "${DOCKERHUB_AUTH_USR}"
         PORT_EXPOSED = "80"
-        IMAGE_NAME = "alpinebootcamp33"
+        IMAGE_NAME = "alpine-bootcamp33"
         IMAGE_TAG = "v1.1"
         DOCKER_USERNAME = 'blondel'
     }
